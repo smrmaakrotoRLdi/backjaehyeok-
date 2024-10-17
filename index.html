@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>레벨 강화 시스템</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+        img {
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>호날두 강화 시스템</h1>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Cristiano_Ronaldo_2018.jpg" alt="호날두" width="200" />
+    <div id="level">현재 레벨: 1</div>
+    <button onclick="upgrade()">강화</button>
+    <div id="result"></div>
+
+    <script>
+        let level = 1;
+
+        function upgrade() {
+            const successRates = [100, 81, 64, 50, 26, 15, 7];
+            if (level < 8) {
+                const successRate = successRates[level - 1];
+                const random = Math.random() * 100;
+
+                if (random < successRate) {
+                    level++;
+                    document.getElementById('result').innerHTML = '강화 성공!';
+                } else {
+                    // 실패 시 레벨 하락
+                    const failRandom = Math.random() * 100;
+                    if (failRandom < 50) {
+                        level = 1; // 50% 확률로 1레벨
+                    } else if (failRandom < 75) {
+                        level = 3; // 25% 확률로 3레벨
+                    } else {
+                        level = 4; // 25% 확률로 4레벨
+                    }
+                    document.getElementById('result').innerHTML = '강화 실패!';
+                }
+
+                document.getElementById('level').innerHTML = `현재 레벨: ${level}`;
+            } else {
+                document.getElementById('result').innerHTML = '레벨 8에 도달했습니다!';
+            }
+        }
+    </script>
+</body>
+</html>
